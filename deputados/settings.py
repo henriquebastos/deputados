@@ -28,16 +28,15 @@ DATABASES = {
 def get_cache():
   import os
   import urlparse
-  import json
-  import bmemcached
   try:
-   return {
+    redis_url = urlparse.urlparse(os.environ.get('REDISCLOUD_URL'))
+    return {
         'default': {
-            'BACKEND': 'django_bmemcached.memcached.BMemcached',
-            'LOCATION': os.environ.get('MEMCACHEDCLOUD_SERVERS').split(','),
+            'BACKEND': 'redis_cache.RedisCache',
+            'LOCATION': '%s:%s' % (redis_url.hostname, redis_url.port),
             'OPTIONS': {
-                    'username': os.environ.get('MEMCACHEDCLOUD_USERNAME'),
-                    'password': os.environ.get('MEMCACHEDCLOUD_PASSWORD')
+                'PASSWORD': redis_url.password,
+                'DB': 0,
             }
         }
     }
