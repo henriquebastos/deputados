@@ -9,8 +9,10 @@ ROOT = Path(__file__).parent
 # ip list to toolbar showing
 INTERNAL_IPS = ('127.0.0.1', )
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
+
+ALLOWED_HOSTS = ['.localhost', '127.0.0.1', '.herokuapp.com']
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
