@@ -27,6 +27,8 @@ DATABASES = {
 
 def get_cache():
   import os
+  import urlparse
+  import json
   import bmemcached
   try:
    return {
