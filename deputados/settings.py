@@ -27,17 +27,17 @@ DATABASES = {
 
 def get_cache():
   import os
+  import bmemcached
   try:
-    os.environ['MEMCACHE_SERVERS'] = os.environ['MEMCACHIER_SERVERS'].replace(',', ';')
-    os.environ['MEMCACHE_USERNAME'] = os.environ['MEMCACHIER_USERNAME']
-    os.environ['MEMCACHE_PASSWORD'] = os.environ['MEMCACHIER_PASSWORD']
-    return {
-      'default': {
-        'BACKEND': 'django_pylibmc.memcached.PyLibMCCache',
-        'TIMEOUT': 500,
-        'BINARY': True,
-        'OPTIONS': { 'tcp_nodelay': True }
-      }
+   return {
+        'default': {
+            'BACKEND': 'django_bmemcached.memcached.BMemcached',
+            'LOCATION': os.environ.get('MEMCACHEDCLOUD_SERVERS').split(','),
+            'OPTIONS': {
+                    'username': os.environ.get('MEMCACHEDCLOUD_USERNAME'),
+                    'password': os.environ.get('MEMCACHEDCLOUD_PASSWORD')
+            }
+        }
     }
   except:
     return {
