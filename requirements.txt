@@ -1,4 +1,7 @@
 Django==1.5.4
+Unipath==1.0
+dj-database-url==0.2.2
+dj-static==0.0.5
 gunicorn==18.0
 pystache==0.5.3
 python-memcached==1.53
