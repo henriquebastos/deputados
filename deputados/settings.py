@@ -1,6 +1,7 @@
 # Django settings for parlamento project.
 
 from unipath import Path
+import dj_database_url
 
 ROOT = Path(__file__).parent
 
@@ -18,13 +19,8 @@ ADMINS = (
 MANAGERS = ADMINS
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': ROOT.child('db.sqlite3'), # Or path to database file if using sqlite3.
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-        'PORT': '',                      # Set to empty string for default.
+    'default': dj_database_url.config(
+        default='sqlite:///' + BASE_DIR.child('db.sqlite3')),                    # Set to empty string for default.
     }
 }
 
