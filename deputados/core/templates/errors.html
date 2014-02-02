@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+    <div class="jumbotron">
+      <div class="row">
+	    <div class="col-lg-1">
+	    	<img src="{% static 'img/sad.png' %}">
+	    </div>
+	    <div class="col-lg-10">
+	    	 <h3>
+			   <span class="text-black"> Desculpe, mas algo deu errado... <span>
+			 </h3>
+			 <h4>
+			   <span class="text-muted text-center"> Não se preocupe, a shield já foi acionada.  <span> 
+			 </h4>
+	    </div>
+	  </div>
+	</div>
+
+{% endblock content %}

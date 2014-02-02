@@ -1,0 +1,423 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+	
+	<div id="deputados-list" class="col-lg-12">
+		{% for deputado in deputados %}
+			
+			<div class="col-lg-3 deputado">
+				<div class="row">
+					<a href="#" 
+					   title="{{ deputado.nomeDeputado }}" 
+					   class="thumbnail deputado-thumbnail view-detail" 
+					   data-id="{{ deputado.idCadastro }}"
+					   data-foto="{{ deputado.foto }}"
+					   data-matricula="{{ deputado.matricula }}"
+					   data-toggle="modal">
+						<img src="{{ deputado.foto }}" alt="{{ deputado.nomeDeputado }}" class="img remove-radius">
+					</a>
+				</div>
+				<div class="row deputado-descricao">
+					<p>Nome: {{ deputado.nomeDeputado }}</p>
+					<p>UF Representante: {{ deputado.uf }}</p>
+					<p>Partido: {{ deputado.partido }}</p>
+				</div>
+			</div>
+
+		{% empty %}
+			<br />
+		    <div class="jumbotron">
+			  <h3> 
+			  	   <img src="{% static 'img/sad.png' %}"> &nbsp;
+			  	   <span class="text-muted"> Não foram encontrados resultados para <span> 
+			  	   <strong class="text-black">"{{chave|lower}}"</strong>
+			  	   <p class="col-lg-2 centered">
+			  	   	  <br />
+			  	   	  <a href="/" class="btn btn-default btn-lg" role="button">Voltar</a>
+			  	   </p>
+			  </h3>
+			</div>
+		{% endfor %}
+	</div>
+
+	{% if deputados %}
+	<div class="col-lg-12">
+		<div class="pagination-dep">
+			<button id="btn-paginate" data-loading-text="Carregando..." data-page="1" class="btn btn-default btn-lg"> 
+				Mostrar mais
+			</button>
+		</div>
+	</div>
+	{% endif %}
+	
+	<!-- Modal -->
+	<div class="modal" id="modal-details" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-lg">
+	    <div class="modal-content">
+	    </div><!-- /.modal-content -->
+	   </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+
+	<div class="modal" id="modal-loading" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+		<div class="modal-content">
+    		<span class="loading-img">
+    			<img src="{% static 'img/loading-bar.gif'%}"  alt="loading...">
+    		</span>
+		</div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+
+	<script id="template-deputados" type="x-handlebars-template">
+		{% verbatim %}
+			{{#list deputados}}
+				<div class="col-lg-3 deputado">
+					<div class="row">
+						<a href="#" 
+						   title="{{ nomeDeputado }}" 
+						   class="thumbnail deputado-thumbnail view-detail" 
+						   data-id="{{ idCadastro }}"
+						   data-foto="{{ foto }}"
+						   data-matricula="{{ matricula }}"
+						   data-toggle="modal">
+							<img src="{{ foto }}" alt="{{ nomeDeputado }}" class="img-rounded remove-radius">
+						</a>
+					</div>
+					<div class="row deputado-descricao">
+						<p>Nome: {{ nomeDeputado }}</p>
+						<p>UF Representante: {{ uf }}</p>
+						<p>Partido: {{ partido }}</p>
+					</div>
+				</div>
+			{{/list}}
+		{% endverbatim %}
+	</script>
+
+	<script id="template-detalhe-parlamentar" type="x-handlebars-template">
+		   {% verbatim %}
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		        <h4 class="modal-title" id="myModalLabel">{{nomeParlamentarAtual}} - {{partidoAtual.sigla}} - {{partidoAtual.nome}}</h4>
+		      </div>
+		      <div class="modal-body">
+		      	 <div class="row">
+		      	 	<div class="col-lg-2">
+			      	 	<a href="#" class="thumbnail">
+			      	 		<img src="{{ foto }}" alt="{{ nomeParlamentar }}" class="img-rounded">
+			      	 	</a>
+		      	 	</div>
+		      	 	<div class="col-lg-10">
+		      	 	<table class="table table-condensed">
+					  <tbody>
+					  	<tr class="active">
+					  	  <td colspan="3" align="center">Pessoal</td>
+					  	</tr>
+					  	<tr>
+					  	  <td colspan="3"><strong>Nome Civil:</strong> {{nomeCivil}}</td>
+					  	</tr>
+					  	<tr>
+					  	  <td><strong>Data Nasc.:</strong> {{dataNascimento}}</td>
+					  	  <td colspan="2"><strong>Profissão:</strong> 
+					  	  {{#if nomeProfissao}} 
+					  	  	{{nomeProfissao}}</td>
+					  	  {{else}}
+					  	  	 indefinida
+					  	  {{/if}}
+					  	</tr>
+					  	<tr>
+					  	  <td colspan="3"><strong>UF de Representação.:</strong> {{ufRepresentacaoAtual}}</td>
+					  	</tr>
+					  	<tr class="active">
+					  	  <td colspan="3" align="center">Gabinete</td>
+					  	</tr>
+					  	<tr>
+					  	  <td><strong>Anexo:</strong>    {{gabinete.anexo}}</td>
+					  	  <td><strong>Nº:</strong>       {{gabinete.numero}}</td>
+					  	  <td><strong>Telefone:</strong> {{gabinete.telefone}}</td>
+					  	</tr>
+					  	<tr>
+					  	  <td colspan="3"><strong>Email:</strong> {{email}}</td>
+					  	</tr>
+					  </tbody>
+					</table>
+		    			<!--<ul class="list-group">
+						  <li class="list-group-item">Nome civil: {{nomeCivil}}</li>
+						  <li class="list-group-item">Data de Nascimento: {{dataNascimento}} </li>
+						  <li class="list-group-item">Email: {{email}} </li>
+						  <li class="list-group-item">Profissão: {{nomeProfissao}} </li>
+						  <li class="list-group-item">SEXO: {{sexo}}</li>
+						  <li class="list-group-item">Estado de Representação: {{ufRepresentacaoAtual}}</li>
+						</ul>-->
+		      	 	</div>
+		      	 </div>
+
+		      	 <div id="tabs-detalhes-parlamentar" class="row">
+		      	 	<!-- Nav tabs -->
+						<ul class="nav nav-tabs">
+						  <li><a href="#tab-comissoes"   data-toggle="tab">Comissões</a></li>
+						  <li><a href="#tab-cargo-comissoes" data-toggle="tab">Cargos em Comissões</a></li>
+						  <li><a href="#tab-liderancas"  data-toggle="tab">Lideranças</a></li>
+						  <li><a href="#tab-periodo-exec"  data-toggle="tab">Período Exercício</a></li>
+						  <li><a href="#tab-presencas"  data-toggle="tab">Gráfico de Presenças</a></li>
+						</ul>
+
+						<!-- Tab panes -->
+						<div class="tab-content">
+						  <div class="tab-pane" id="tab-comissoes"></div>
+						  <div class="tab-pane" id="tab-cargo-comissoes"></div>
+						  <div class="tab-pane" id="tab-liderancas"></div>
+						  <div class="tab-pane" id="tab-periodo-exec"></div>
+						  <div class="tab-pane" id="tab-presencas"  style="padding-top: 20px;">
+						  	<div class="row">
+							  	<div class="col-lg-3">
+							  		<h4>
+							  		  <p id="title-periodos" class="text-center"> Períodos de Exercício </h4>
+							  		</h4>
+							  		<div id="lista-periodos" class="list-group">
+								  		{{#list periodosExercicio.periodoExercicio}}
+							  			    <a href="#" class="list-group-item" data-inicio="{{ dataInicio }}" data-fim="{{ dataFim }}"> 
+							  			    	{{ dataInicio }} - 
+						  				   		{{#if dataFim}}
+							  				   		{{ dataFim }} 
+						  				   		{{else}}
+						  				      		exercendo
+						  				   		{{/if}}
+							  			    </a>
+							  			{{/list}}
+									</div>
+
+									<div id="popover-periodos-exec" class="popover bottom in" style="top: 90%; left: 20px; display: block; text-align: justify;">
+								        <div class="arrow"></div>
+								       <div class="popover-content">
+								          <p>
+								          	<strong>Selecione</strong> o período de exercício do parlamentar para visualizar o gráfico de presenças. </p>
+								        </div>
+								    </div>
+									
+							  	</div>
+
+							  	<div class="col-lg-9">
+								  	<div class="panel panel-default no-padding">
+									  <div class="panel-heading">
+									    <h3 class="panel-title">Gráfico</h3>
+									  </div>
+									  <div class="panel-body" id="grafico-content">
+									     	<div class="col-lg-12">
+											     <p class="lead">Gráfico de Presenças</p>
+											  		 <p>
+											  		 	O Gráfico de Presenças, tem por finalidade apresentar a relação de presenças e faltas durante o período de exercício do parlamentar
+										  		 	 </p>
+										  		 </p>
+									    	</div>
+									    	<div class="col-lg-12 loading-graph hide" id="grafico-loading">
+									      		<img class="img" src="/static/img/loading-bar.gif" />
+									        </div>
+								  		 	<div id="grafico-content-grafico" class="col-lg-12">
+
+								  		 	</div>
+								  		 	<div  class="col-lg-12">
+								  		 		<table class="legenda">
+								  		     		<caption>legenda</caption>
+								  		     		<tbody>
+								  		     			<tr>
+								  		     				<td>Presenças</td>
+								  		     				<td>
+								  		     				   <span class="legenda-block green"></span>
+								  		     				</td>
+								  		     			</tr>
+								  		     			<tr>
+								  		     				<td>Ausências</td>
+								  		     				<td>
+								  		     					<span class="legenda-block red"></span>	
+								  		     				</td>
+								  		     			</tr>
+								  		     		</tbody>
+								  		     	</table>
+									  		</div>
+									  </div>
+									</div>
+							  	</div>
+							</div>
+						  </div>
+						</div>
+		      	 </div>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+		      </div>
+		     {% endverbatim %}
+	</script>
+
+	<script id="template-comissao" type="x-handlebars-template">
+		  {% verbatim %}
+		  {{#if comissao}}
+		  	<table class="table table-hovered">
+		  		<thead>
+		  			<tr>
+		  				<th>Sigla</th>
+		  				<th>Comissão</th>
+		  				<th>Condição</th>
+		  				<th>Entrada</th>
+		  				<th>Saída</th>
+		  			</tr>
+		  		</thead>
+		  		<tbody>
+		  			{{#list comissao}}
+		  			<tr>
+		  				<td>{{ siglaComissao }}</td>
+		  				<td class="justify">{{ nomeComissao }}</td>
+		  				<td>{{ condicaoMembro }}</td>
+		  				<td>{{ dataEntrada }}</td>
+		  				<td>
+		  				   {{#if dataSaida}}
+		  					{{ dataSaida }}
+		  				   {{else}}
+		  				      ##/##/####
+		  				   {{/if}}
+		  				</td>
+		  			</tr>
+		  			{{/list}}
+		  		</tbody>
+		  	</table>
+		  {{else}}
+		  	 <div class="alert alert-info justify">
+		   			<p class="text-center">
+		   		   		Não há histórico de comissões disponível.
+		   			</p>
+		   	  </div>
+		  {{/if}}
+		  {% endverbatim %}
+	</script>
+
+	<script id="template-cargo-comissao" type="x-handlebars-template">
+		  {% verbatim %}
+		  {{#if cargoComissoes}}
+		  	<table class="table table-hovered">
+		  		<thead>
+		  			<tr>
+		  				<th>Cargo</th>
+		  				<th>Comissão</th>
+		  				<th>Entrada</th>
+		  				<th>Saída</th>
+		  			</tr>
+		  		</thead>
+		  		<tbody>
+		  			{{#list cargoComissoes}}
+		  			<tr>
+		  				<td nowrap>{{ nomeCargo }}</td>
+		  				<td class="justify">{{ siglaComissao }} </td>
+		  				<td>{{ dataEntrada }}</td>
+		  				<td>
+		  				   {{#if dataSaida}}
+		  					   {{ dataSaida }}
+		  				   {{else}}
+		  				       ##/##/####
+		  				   {{/if}}
+		  				</td>
+		  			</tr>
+		  			{{/list}}
+		  		</tbody>
+		  	</table>
+		  {{else}}
+		  	 <div class="alert alert-info justify">
+		   			<p class="text-center">
+		   		   		Não há histórico de cargos em comissões disponível.
+		   			</p>
+		   	  </div>
+		  {{/if}}
+		  {% endverbatim %}
+	</script>
+
+	<script id="template-lideranca" type="x-handlebars-template">
+		  {% verbatim %}
+		   {{#if itemHistoricoLider}}
+		  	<table class="table table-hovered">
+		  		<thead>
+		  			<tr>
+		  				<th>Unidade de Liderança</th>
+		  				<th>Cargo</th>
+		  				<th>Designação</th>
+		  				<th>Término</th>
+		  			</tr>
+		  		</thead>
+		  		<tbody>
+		  			{{#list itemHistoricoLider}}
+		  			<tr>
+		  				<td>{{ siglaUnidadeLideranca }}</td>
+		  				<td class="justify">{{ descricaoCargoLideranca }} </td>
+		  				<td>{{ dataDesignacao }}</td>
+		  				<td>
+		  				  {{#if dataTermino}}
+			  				  {{ dataTermino }}
+		  				   {{else}}
+		  				      ##/##/####
+		  				   {{/if}}
+		  				</td>
+		  			</tr>
+		  			{{/list}}
+		  		</tbody>
+		  	</table>
+		  {{else}}
+		    <div class="alert alert-info justify">
+	   			<p class="text-center">
+	   		   		Não há histórico de lideranças disponível.
+	   			</p>
+		   	</div>
+		  {{/if}}
+		  {% endverbatim %}
+	</script>
+	  
+	<script id="template-periodo-exercicio" type="x-handlebars-template">
+		  {% verbatim %}
+		   {{#if periodoExercicio}}
+		  	<table class="table table-hovered">
+		  		<thead>
+		  			<tr>
+		  				<th>Início</th>
+		  				<th>Fim</th>
+		  				<th>Causa</th>
+		  				<th>Situação</th>
+		  				<th>UF Representação</th>
+		  			</tr>
+		  		</thead>
+		  		<tbody>
+		  			{{#list periodoExercicio}}
+		  			<tr>
+		  				<td>{{ dataInicio }}</td>
+		  				<td>
+			  			   {{#if dataFim}}
+			  				   {{ dataFim }} 
+		  				   {{else}}
+		  				      <span class="label label-info"> exercendo </span>
+		  				   {{/if}}
+		  				</td>
+		  				<td nowrap>{{ descricaoCausaFimExercicio }}</td>
+		  				<td>{{ situacaoExercicio }}</td>
+		  				<td>{{ siglaUFRepresentacao }}</td>
+		  			</tr>
+		  			{{/list}}
+		  		</tbody>
+		  	</table>
+		   {{else}}
+				 <div class="alert alert-info justify">
+					<p class="text-center">
+				   		Não há histórico de períodos disponível.
+					</p>
+			   	 </div>
+		   {{/if}}
+		  {% endverbatim %}
+	</script>
+
+
+
+	<input type="hidden" id="ide-parlamentar"  name="ide-parlamentar" value="">
+	<input type="hidden" id="foto-parlamentar" name="foto-parlamentar" value="">
+	<input type="hidden" id="matricula-parlamentar" name="matricula-parlamentar" value="">
+
+	<script type="text/javascript" src="{% static 'assets/template/handlebars-v1.1.2.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/parlamento.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/paginate.js' %}"></script>
+
+{% endblock content %}

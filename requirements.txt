@@ -1,0 +1,7 @@
+Django==1.5.4
+gunicorn==18.0
+pystache==0.5.3
+python-memcached==1.53
+static==1.0.2
+wsgiref==0.1.2
+xmldict==0.4.1

@@ -1,0 +1,326 @@
+
+html, body {
+	font-family: 'Noto Sans', sans-serif; 
+	padding: 0;
+}
+
+#app-header{
+	padding: 0;
+}
+	#app-header #app-header-search-bar {
+		 padding: 1.2em 0 0 0;
+	}
+
+	#app-header-logo { }
+
+		#app-header-logo > a {
+			text-decoration: none;
+			color: #000000;
+		}
+
+#content-body {
+	margin-top: 15px;
+}
+
+.tabs-detalhes-parlamentar {
+	padding-top: .2em;
+}
+
+.jumbotron {
+	margin-top: 40px;
+}
+
+.pagination-dep { 
+	padding: 15px 0 0 42%;
+	width: 100%;
+	float: left;
+}
+
+	.pagination-dep > button {
+		margin: 15px;
+	}
+
+.deputado {
+	width: 23%;
+	margin: 5px 10px 0 0;
+	border: 2px solid #bdc3c7;
+	-webkit-border-radius: 4px;
+	   -moz-border-radius: 4px;
+	        border-radius: 4px;
+}
+	.deputado:hover {
+		border: 2px solid #3498db;
+	}
+
+	.deputado:hover .deputado-descricao {
+		background-color: #3498db;
+		color: #ffffff;
+	}
+
+	.deputado-thumbnail {
+		border: none;
+	}
+
+	.deputado-uf {
+		position: relative;
+		left: 77%;
+		top: 30px;
+	}
+	
+	.deputado-descricao {
+		background-color: #bdc3c7;
+		padding: .3em 0 0 2em;
+	}
+
+/*
+*  SEARCH BAR
+*/
+
+.input-search-bar{
+	width: 400px;
+	border: 2px solid #bdc3c7;
+}
+
+.input-search-bar:focus {
+	border: 2px solid #2ecc71;
+}
+
+.btn-search-bar:hover{
+  color: #ffffff;
+  background-color: #58d68d;
+  border-color: #58d68d;
+}
+
+/* TUMBNAIL */
+
+
+/* PROGRESS */
+
+.progress {
+    position: relative;
+}
+
+.bar {
+    z-index: 1;
+    position: absolute;
+}
+
+.progress span {
+    position: relative;
+    top: 0;
+    z-index: 2;
+    color: white; // You might need to change it
+    text-align: center;
+    width: 100%;
+}
+
+/*
+ * LEGENDA
+ */
+
+ .legenda {
+ 	padding: 5px;
+ 	margin-top: 20px; 
+ }
+
+  .legenda > tbody > tr {
+  	margin: 2px;
+  }
+
+  .legenda > tbody > tr > td {
+  	margin: 2px;
+  	font-size: 12px;
+  	font-weight: bold;
+  }
+ 
+ .legenda-block {
+	height: 18px;
+	width: 18px;
+	display: block;
+ }
+
+/*
+ *  BUTTONS
+ */
+
+.custom-default {
+	border: 1px solid #7f8c8d;
+}
+
+.custom-default:hover {
+	border: 1px solid #7f8c8d;
+}
+
+/*
+*  UTILS
+*/
+
+.box-shadow-top {
+	-webkit-box-shadow: inset 0px 2px 3px 0 rgba(0, 0, 0, 0.3);
+	   -moz-box-shadow: inset 0px 2px 3px 0 rgba(0, 0, 0, 0.3);
+	        box-shadow: inset 0px 2px 3px 0 rgba(0, 0, 0, 0.3);
+}
+
+.box-shadow-bottom {
+	-webkit-box-shadow: inset 0px -2px 3px 0 rgba(0, 0, 0, 0.3);
+	   -moz-box-shadow: inset 0px -2px 3px 0 rgba(0, 0, 0, 0.3);
+	        box-shadow: inset 0px -2px 3px 0 rgba(0, 0, 0, 0.3);
+}
+
+.remove-top-radius {
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+}
+
+.remove-radius {
+	-webkit-border-radius: 0;
+	   -moz-border-radius: 0;
+	        border-radius: 0;
+}
+
+.justify {
+	text-align: justify;
+}
+
+.border-green {
+	border: 2px solid #27ae60;
+}
+
+.centered {
+	float: none;
+	margin: 0 auto;
+}
+
+.text-black {
+	color: #000000;
+}
+
+.green {
+	background-color: #5cb85c;
+}
+
+.red {
+	background-color: #d9534f;
+}
+
+.no-padding {
+	padding: 0;
+}
+
+/*
+* LOADING
+*/
+
+.loading {
+	padding: 1.2em;
+	text-align: center;
+}
+
+.loading-img {
+ 	padding-top: 10px;
+}
+
+.loading-graph {
+	background-color: #FFFFFF;
+	margin-top: 20px;
+}
+	.loading-graph img {
+		position: relative;
+		left: 35%;
+	}
+
+/*
+* MODAL
+*/
+
+#modal-details .modal-footer {
+	margin-top: 0;
+}
+
+.modal-dialog-lg {
+	width: 70%;
+}
+
+.alert {
+	border-radius: 0;
+}
+
+/* MEDIA QUERIES */
+
+/* Large desktop */
+@media (min-width: 1200px) { 
+	
+}
+
+/* Portrait tablet to landscape and desktop */
+@media (min-width: 979px) and (max-width: 1024px) { 
+
+	.deputado {
+		width: 100%;
+	}
+}
+ 
+/* Portrait tablet to landscape and desktop */
+@media (min-width: 768px) and (max-width: 979px) { 
+
+	.deputado {
+		width: 100%;
+	}
+
+	.pagination-dep { 
+		padding-left: 40%;
+	}
+
+	.modal-dialog-lg {
+		width: 100%;
+	}
+}
+ 
+/* Landscape phone to portrait tablet */
+@media (max-width: 767px) { 
+	
+
+	.deputado {
+		width: 100%;
+	}
+
+	.pagination-dep { 
+		padding-left: 35%;
+	}
+
+	.modal-dialog-lg {
+		width: 100%;
+	}
+
+	.nav-tabs > li {
+        float:none;
+    }
+}
+ 
+/* Landscape phones and down */
+@media (max-width: 480px) { 
+	
+	.deputado {
+		width: 100%;
+	}
+
+	.pagination-dep { 
+		padding-left: 30%;
+	}
+
+	.modal-dialog-lg {
+		width: 100%;
+	}
+}
+
+/*
+* FONTS
+*/
+
+@font-face {
+  font-family: 'Noto Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Noto Sans'), local('NotoSans'), url(http://themes.googleusercontent.com/static/fonts/notosans/v1/LeFlHvsZjXu2c3ZRgBq9nD8E0i7KZn-EPnyo3HZu7kw.woff) format('woff');
+}
+

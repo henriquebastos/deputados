@@ -1,0 +1,80 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Deputados.gov</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<link rel="stylesheet" href="{% static 'assets/bootstrap/css/bootstrap.css' %}">
+	<link rel="stylesheet" href="{% static 'assets/autocomplete/typeahead.css' %}">
+	<link rel="stylesheet" href="{% static 'css/css.css' %}">
+
+	<!-- JQUERY -->
+	<script type="text/javascript" src="{% static 'assets/jquery/jquery.js' %}"></script>
+</head>
+ <body>
+	
+	<div id="app-content" class="container">
+
+		<div id="app-header" class="row">
+			<div class="col-lg-12 centered">
+				<div id="app-header-logo" class="col-lg-3">
+					 <a href="/" title="Deputados.gov">
+					 	 <h3>Deputados<span>.gov </span></h3>
+					 </a>
+				</div>
+				<div id="app-header-search-bar" class="col-lg-8">
+					 <div class="input-group">
+				      <div class="input-group-btn">
+				        <button id="btn-search-bar" 
+				        		type="button" 
+				        		class="btn btn-success dropdown-toggle btn-search-bar" data-toggle="dropdown">
+				        	<span id="search-bar-text"> Pesquisar </span>
+				        	<span class="caret"></span>
+				        </button>
+				         <span class="dropdown-arrow"></span>
+				        <ul id="search-bar-menu" class="dropdown-menu remove-top-radius">
+				          <li>
+				          	 <a href="#" data-tipo-pesquisa="pessoas">
+				          	 	<span class="glyphicon glyphicon-user"></span> Pessoas
+				          	 </a>
+				          </li>
+				          <li>
+				          	 <a href="#" data-tipo-pesquisa="partidos">
+				          	 	<span class="glyphicon glyphicon-th-large"></span> Partidos
+				          	 </a>
+				          </li>
+				          <li>
+				          	 <a href="#" data-tipo-pesquisa="estados">
+				          	 	<span class="glyphicon glyphicon-home"></span> Estados
+				          	 </a>
+				          </li>
+				        </ul>
+				      </div>
+				      <input type="text" class="form-control input-search-bar">
+				    </div>
+				</div>
+			</div>
+		</div>
+
+		<div id="content-body" class="row">
+			{% block content %} {% endblock content %}
+		</div>
+	
+	</div>
+
+	<script id="template-typeahead" type="x-handlebars-template">
+ 	 {% verbatim %} {{value}} {% endverbatim %}
+	</script>
+
+	<!-- BOOTSTRAP -->
+	<script type="text/javascript" src="{% static 'assets/bootstrap/js/bootstrap.js' %}"></script>
+	<script type="text/javascript" src="{% static 'assets/autocomplete/typeahead.js' %}"></script>
+	<script type="text/javascript" src="{% static 'assets/storage/sessionstorage.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/app.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/searchbar.js' %}"></script>
+
+</body>
+</html>
+
