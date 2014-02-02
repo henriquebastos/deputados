@@ -22,7 +22,7 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': dj_database_url.config(
-        default='sqlite:///' + BASE_DIR.child('db.sqlite3')),                    # Set to empty string for default.
+        default='sqlite:///' + ROOT.child('db.sqlite3')),                    # Set to empty string for default.
 }
 
 # MEMCACHED
