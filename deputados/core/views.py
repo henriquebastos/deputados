@@ -36,7 +36,8 @@ def index(request):
     result = deputados['deputados'] if 'deputados' in deputados else deputados
 
     context = {
-        'deputados': result[:16]
+        'deputados': result[:16],
+        'total' : len(result)
     }
 
     return render_to_response('app/deputados.html', context)

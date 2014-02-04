@@ -23,7 +23,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "deputados.settings")
 
 # This application object is used by any WSGI server configured to use this
 # file. This includes Django's development server, if the WSGI_APPLICATION
-# setting points here.\import dj_static\\\\\\\
+# setting points here.
 
 from dj_static import Cling
 from django.core.wsgi import get_wsgi_application
