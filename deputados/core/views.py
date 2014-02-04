@@ -87,7 +87,9 @@ def pesquisa(request):
     deputados = paginate(request, resultados, 16)
 
     context = { 
-        'deputados': deputados, 
+        'deputados': deputados,
+        'total' : len(result),
+        'chave' : chave.lower()
     }
 
     print deputados.number
