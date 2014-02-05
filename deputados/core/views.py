@@ -3,6 +3,9 @@ from django.http       import HttpResponse, HttpResponseRedirect
 from django.core.cache import cache
 from django.utils      import simplejson
 
+# regex
+import re
+
 import datetime
 
 # log - debug toolbar
@@ -37,7 +40,8 @@ def index(request):
 
     context = {
         'deputados': result[:16],
-        'total' : len(result)
+        'total' : len(result),
+        'index' : True
     }
 
     return render_to_response('app/deputados.html', context)
@@ -148,16 +152,18 @@ def buscar_deputados_cache(tipo, chave):
 
     resultados = []
 
-    chave_lower = chave.lower()
+    chave_upper = chave.upper()
+
+    def match(reg, name): return bool(re.match(reg, name))
 
     if 'pessoas' in tipo:
-        resultados = [deputado for deputado in deputados if  chave_lower in deputado['nomeDeputado'].lower()]
+        resultados = [deputado for deputado in deputados if  match(r'.*\%s' % chave_upper, deputado['nomeDeputado'].upper())]
 
     elif 'partidos' in tipo:
-        resultados = [deputado for deputado in deputados if  chave_lower in deputado['partido'].lower()]
+        resultados = [deputado for deputado in deputados if  match(r'.*\%s' % chave_upper, deputado['partido'].upper())]
 
     elif 'estados' in tipo:
-        resultados = [deputado for deputado in deputados if  chave_lower in deputado['uf'].lower()]
+        resultados = [deputado for deputado in deputados if  match(r'.*\%s' % chave_upper, deputado['uf'].upper())]
 
     return resultados
 

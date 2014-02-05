@@ -22,8 +22,12 @@
 		};
 
 		request('/parlamentar/pesquisa/', qs, function( data ) {
-
-			list.append(tpl(data));
+			if (data != null) {
+				if (data.deputados.length < 16) { paginate.hide(); };
+				list.append(tpl(data));
+			} else{
+				paginate.hide();
+			}
 		});
 
 		self.data('page', page);

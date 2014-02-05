@@ -264,6 +264,7 @@ html, body {
 
 .footer {
 	border-top: 1px solid #dddddd;
+	margin-top: 20px;
 }
 
 	.footer-content {
@@ -332,6 +333,7 @@ html, body {
 
 	.nav-tabs > li {
         float:none;
+        border: 1px solid #dddddd;
     }
 }
  

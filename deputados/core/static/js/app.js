@@ -2,7 +2,7 @@
 	var request = function ( url, param, callback) {
 	
 		var req = $.get( url, param, function( data ) { 
-			callback(JSON.parse(data)); 
+			callback((data != "None") ? JSON.parse(data) : null); 
 		})
 		  .fail(function () { 
 			callback(null);
