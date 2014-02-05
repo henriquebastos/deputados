@@ -88,7 +88,8 @@ def pesquisa(request):
 
     context = { 
         'deputados': deputados,
-        'total' : len(result)
+        'total' : len(resultados),
+        'chave' : chave
     }
 
     print deputados.number
