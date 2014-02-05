@@ -88,7 +88,7 @@ def pesquisa(request):
 
     context = { 
         'deputados': deputados,
-        'total' : len(resultados),
+        'total' : len(cache.get('deputados')),
         'chave' : chave
     }
 
