@@ -225,8 +225,14 @@ html, body {
 }
 
 .loading-img {
- 	padding-top: 10px;
+ 	padding: 2em;
 }
+	.loading-img img {
+ 		position: relative;
+ 		left: 30%;
+ 		right: 0;
+ 		width: 200px;
+	}
 
 .loading-graph {
 	background-color: #FFFFFF;

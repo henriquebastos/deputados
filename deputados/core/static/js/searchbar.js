@@ -10,7 +10,7 @@
  	var tpl      = $('#template-typeahead'),
 		template = Handlebars.compile(tpl.html());
 	
-	var tipo_session                  = session.get('tipo-pesquisa') 		 == null ? "pessoas" : session.get('tipo-pesquisa'),
+	var tipo_session                  = session.get('tipo-pesquisa') == null ? "pessoas" : session.get('tipo-pesquisa'),
 		popover_tipo_pesquisa_session = session.get('popover-tipo-pesquisa') == null ? false : session.get('popover-tipo-pesquisa');
 	
 	$.each(opcoesPesquisa, function(key, el){
@@ -82,7 +82,7 @@
  		 	cache: false,
  		 	replace: function(url, query) {
  		 		
- 		 		var tipo = session.get('tipo-pesquisa')
+ 		 		var tipo = session.get('tipo-pesquisa') == null ? "pessoas" : session.get('tipo-pesquisa');
 
  		 		var rpl = url.replace('%TIPO', tipo).replace('%CHAVE', query);
 
