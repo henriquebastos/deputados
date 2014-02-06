@@ -9,15 +9,22 @@
  		
  	var tpl      = $('#template-typeahead'),
 		template = Handlebars.compile(tpl.html());
-	
-	var tipo_session                  = session.get('tipo-pesquisa') == null ? "pessoas" : session.get('tipo-pesquisa'),
-		popover_tipo_pesquisa_session = session.get('popover-tipo-pesquisa') == null ? false : session.get('popover-tipo-pesquisa');
+
+	var popover_tipo_pesquisa_session = session.get('popover-tipo-pesquisa') == null ? false : session.get('popover-tipo-pesquisa');
+
+	var tipoPesquisa = function(tipo) {
+		if (tipo) {
+			session.update('tipo-pesquisa', tipo.trim().toLowerCase());
+		} else { 
+			return session.get('tipo-pesquisa') == null ? "pessoas" : session.get('tipo-pesquisa');
+		}
+	};
 	
 	$.each(opcoesPesquisa, function(key, el){
 		
 		var self = $(el);
 
-		if (tipo_session == self.data('tipo-pesquisa')) {
+		if (tipoPesquisa(null) == self.data('tipo-pesquisa')) {
 
 			var text = self.clone()  
 						   .children()
@@ -67,7 +74,7 @@
 
     	textoOpcaoPesquisaSelecionada.html(icone).append(text);
 
-    	session.update('tipo-pesquisa', text.trim().toLowerCase());
+    	tipoPesquisa(text);
     });
 
 
@@ -82,9 +89,7 @@
  		 	cache: false,
  		 	replace: function(url, query) {
  		 		
- 		 		var tipo = session.get('tipo-pesquisa') == null ? "pessoas" : session.get('tipo-pesquisa');
-
- 		 		var rpl = url.replace('%TIPO', tipo).replace('%CHAVE', query);
+ 		 		var rpl = url.replace('%TIPO', tipoPesquisa(null)).replace('%CHAVE', query);
 
  		 		return rpl;
  		 	},
@@ -92,11 +97,9 @@
  		 		
  		 		var array = [];
 
- 		 		var tipo_selecionado = session.get('tipo-pesquisa');
-
 				$.map(data, function( item ) {
 
-	 		 		switch (tipo_selecionado) {
+	 		 		switch (tipoPesquisa(null)) {
 
 	 		 			case "pessoas":
 	 		 			  	array.push(item.nomeDeputado);
@@ -117,17 +120,13 @@
  		}
 	})
 	.on('typeahead:selected', function(e, data) {
-		
-		var tipo  = session.get('tipo-pesquisa');
-		
- 		window.location.href = '/parlamentar/pesquisa?tipo=' + tipo + '&chave=' + data.value;
+		window.location.href = '/parlamentar/pesquisa?tipo=' + tipoPesquisa(null) + '&chave=' + data.value;
  	});
 
 	input.on('keypress', function(e) {
 		if (e.keyCode == 13) {
 			if (input.val()) {
-				var tipo = session.get('tipo-pesquisa');
-				window.location.href = '/parlamentar/pesquisa?tipo=' + tipo + '&chave=' + input.val();		
+				window.location.href = '/parlamentar/pesquisa?tipo=' + tipoPesquisa(null) + '&chave=' + input.val();		
 			};
 		};
 	});
@@ -136,5 +135,5 @@
 		btn_search.popover('show');
 		session.store('popover-tipo-pesquisa', true);
 	}
-	
+
 })( jQuery , SessionStorage );
