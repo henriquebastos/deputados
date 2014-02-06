@@ -9,7 +9,7 @@
  Acesso: <a target="_blank" href="http://deputados.herokuapp.com/">http://deputados.herokuapp.com/</a>
  
  
- Dados Técnicos
+ <h4>Dados Técnicos</h4>
 
  A aplicação está foi desenvolvida com as seguintes ferramentas e versões:
  
