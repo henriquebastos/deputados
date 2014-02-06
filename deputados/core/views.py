@@ -154,7 +154,7 @@ def buscar_deputados_cache(tipo, chave):
 
     chave_upper = chave.upper()
 
-    def match(reg, name): return bool(re.match(reg, name))
+    match = lambda reg, name: bool(re.match(reg, name))
 
     if 'pessoas' in tipo:
         resultados = [deputado for deputado in deputados if  match(r'.*\%s' % chave_upper, deputado['nomeDeputado'].upper())]
